@@ -52,10 +52,12 @@ public class MyRepositoryImplTest {
     }
 
     @Test
-    @Ignore
     public void testSave_GenericType() {
-        Data data = new Data("lol description");
+        Data data = new Data("test description");
         myRepository.save(data);
+        Data found = myRepository.findOne(data.getId());
+        assertEquals(data, found);
+        myRepository.delete(data);
     }
 
     @Test
