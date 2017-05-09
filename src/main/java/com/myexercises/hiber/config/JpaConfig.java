@@ -5,6 +5,7 @@
  */
 package com.myexercises.hiber.config;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.myexercises.hiber.Application;
 import com.myexercises.hiber.entity.Data;
 import com.zaxxer.hikari.HikariConfig;
@@ -15,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -49,13 +51,25 @@ public class JpaConfig {
     private Boolean showSql;
     
     @Bean
-    public DataSource dataSource() {
+    @Profile("hikari")
+    public DataSource hikariDataSource() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(driver);
         config.setJdbcUrl(url);
         config.setUsername(username);
         config.setPassword(password);
         return new HikariDataSource(config);
+    }
+    
+    @Bean
+    @Profile({"default","cpds"})
+    public DataSource cpds() throws Exception {
+        ComboPooledDataSource cpds = new ComboPooledDataSource();
+        cpds.setDriverClass(driver);
+        cpds.setJdbcUrl(url);
+        cpds.setUser(username);
+        cpds.setPassword(password);
+        return cpds;
     }
     
     @Bean
