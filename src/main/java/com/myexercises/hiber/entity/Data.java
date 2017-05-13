@@ -5,6 +5,7 @@
  */
 package com.myexercises.hiber.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.persistence.Id;
  */
 @Entity(name="yourapp_data")
 @SuppressWarnings("PersistenceUnitPresent")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Data implements DomainObject {
     @Id
     @GeneratedValue
