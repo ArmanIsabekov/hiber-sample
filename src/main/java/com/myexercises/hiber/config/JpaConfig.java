@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = Application.class)
 @PropertySource("classpath:/com/myexercises/hiber/config/application.properties")
 public class JpaConfig {
     
